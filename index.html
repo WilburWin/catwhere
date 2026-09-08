@@ -9,7 +9,6 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <script src="engine.js" defer></script>
-  <script src="levels.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -20,7 +19,7 @@
         <path d="m13 14 3 14 10-7Zm54 0-3 14-10-7Z" fill="#e99a89"/>
         <path d="M11 48Q23 34 40 49 59 34 70 48Q70 67 48 68H31Q12 65 11 48Z" fill="#fff3dc"/>
         <path d="m34 18 2 9m9-9-2 9M20 32l6 2m28 0 6-2" stroke="#d5914f" stroke-width="3.8" stroke-linecap="round"/>
-        <ellipse cx="26" cy="40" rx="3.1" ry="4.4" fill="#4d493d"/><ellipse cx="54" cy="40" rx="3.1" ry="4.4" fill="#4d493d"/>
+        <ellipse class="cat-eye" cx="26" cy="40" rx="3.1" ry="4.4" fill="#4d493d"/><ellipse class="cat-eye" cx="54" cy="40" rx="3.1" ry="4.4" fill="#4d493d"/>
         <path d="M36 48q4-3 8 0l-4 4Z" fill="#b57666"/>
         <path d="M40 52v3m0 0q-4 5-8 0m8 0q4 5 8 0" fill="none" stroke="#815a3e" stroke-width="1.8" stroke-linecap="round"/>
         <path d="m10 45 10 2m-11 6 11-1m50-7-10 2m11 6-11-1" stroke="#815a3e" stroke-width="1.7" stroke-linecap="round"/>
@@ -43,7 +42,7 @@
   <div class="site-shell">
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="猫咪在哪里，首页"><span class="brand-mark"><svg><use href="#i-paw"/></svg></span><span>猫咪在哪里<span class="brand-caption">A LITTLE CAT PUZZLE</span></span></a>
-      <div class="header-actions"><span class="offline-badge"><i></i>随时玩，离线也可以</span><button class="icon-button" id="help-button" aria-label="玩法说明" title="玩法说明"><svg class="icon"><use href="#i-help"/></svg></button><button class="icon-button" id="settings-button" aria-label="游戏设置" title="游戏设置"><svg class="icon"><use href="#i-settings"/></svg></button></div>
+      <div class="header-actions"><span class="offline-badge"><i></i>随时玩，离线也可以</span><button class="icon-button" id="help-button" aria-label="玩法说明" title="玩法说明"><svg class="icon"><use href="#i-help"/></svg></button></div>
     </header>
     <main class="main-layout">
       <aside class="intro">
@@ -72,38 +71,21 @@
             <span class="streak-legacy" aria-hidden="true">已完成 <b id="total-wins">0</b></span>
           </div>
         </div>
-        <section class="quick-settings" id="quick-settings" aria-label="快速设置">
-          <span class="quick-settings-title"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg>快速设置</span>
-          <label class="quick-toggle" title="显示 A–J 字母，帮助区分颜色">
-            <input type="checkbox" data-main-setting="colorblind" aria-label="色盲辅助">
-            <span class="toggle-track" aria-hidden="true"><i></i></span><span>色盲辅助</span>
-          </label>
-          <label class="quick-toggle" title="在格子右下角显示行列坐标">
-            <input type="checkbox" data-main-setting="coordinates" aria-label="显示坐标">
-            <span class="toggle-track" aria-hidden="true"><i></i></span><span>坐标</span>
-          </label>
-          <label class="quick-toggle" title="放猫后标出不能再放的位置">
-            <input type="checkbox" data-main-setting="autoMark" checked aria-label="自动排除">
-            <span class="toggle-track" aria-hidden="true"><i></i></span><span>自动排除</span>
-          </label>
-          <label class="quick-toggle" title="播放轻柔的操作音效">
-            <input type="checkbox" data-main-setting="sound" aria-label="音效">
-            <span class="toggle-track" aria-hidden="true"><i></i></span><span>音效</span>
-          </label>
-        </section>
         <div class="game-card">
           <div class="board-heading"><div><div class="level-kicker">藏猫猫 · <span id="difficulty-label">挑战</span></div><h2>第 <span id="level-number">001</span> 关</h2></div><div class="round-info"><div class="lives" id="lives" aria-label="剩余3次机会"></div><button class="timer" id="pause-button" aria-label="暂停游戏（P）" title="点击暂停 / 继续（P）"><svg class="icon"><use href="#i-clock"/></svg><span id="timer">00:00</span><span id="pause-label" hidden>暂停</span></button></div></div>
           <div class="board-wrap"><div id="board" class="board" role="group" aria-label="10行10列找猫棋盘"></div><div class="board-overlay" id="board-overlay" hidden><svg><use href="#i-paw"/></svg><span>小猫正在休息</span><button id="resume-button" class="primary-button">继续游戏</button></div></div>
-          <div class="board-bottom"><div class="cat-progress"><svg><use href="#cat-face"/></svg><span>已找到 <b id="found-count">0</b><span class="count-divider"> / </span><span id="target-count">10</span> 只</span></div><div class="progress-dots" id="progress-dots" aria-hidden="true"></div><span class="save-status" id="save-status"><i></i>进度已保存</span></div>
+          <div class="board-bottom"><div class="cat-progress"><svg><use href="#cat-face"/></svg><span>已找到 <b id="found-count">0</b><span class="count-divider"> / </span><span id="target-count">10</span> 只</span></div><div class="progress-dots" id="progress-dots" aria-hidden="true"></div><span class="save-status" id="save-status"><i></i>记录已保存</span></div>
         </div>
-        <div class="controls"><div class="tool-switch" role="group" aria-label="点击格子的操作"><button id="mark-tool" class="selected" aria-pressed="true"><svg class="icon"><use href="#i-close"/></svg><span>排除</span><small class="mouse-key">左键</small><kbd>X</kbd></button><button id="cat-tool" aria-pressed="false"><svg class="icon"><use href="#i-paw"/></svg><span>放猫</span><small class="mouse-key">右键</small><kbd>C</kbd></button></div><div class="utility-controls"><button id="undo-button" class="utility-button" title="撤销（Ctrl+Z）" disabled><svg class="icon"><use href="#i-undo"/></svg><span>撤销</span></button><button id="reset-button" class="utility-button"><svg class="icon"><use href="#i-reset"/></svg><span>重来</span></button><button id="hint-button" class="hint-button"><svg class="icon"><use href="#i-bulb"/></svg>提示</button></div></div>
+        <div class="controls"><section class="quick-settings control-settings" id="quick-settings" aria-label="快速设置"><span class="quick-settings-title"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg>快速设置</span><label class="quick-toggle" title="显示 A–J 字母，帮助区分颜色"><input type="checkbox" data-main-setting="colorblind" aria-label="色盲辅助"><span class="toggle-track" aria-hidden="true"><i></i></span><span>色盲辅助</span></label><label class="quick-toggle" title="在格子右下角显示行列坐标"><input type="checkbox" data-main-setting="coordinates" aria-label="显示坐标"><span class="toggle-track" aria-hidden="true"><i></i></span><span>坐标</span></label></section><div class="utility-controls"><button id="undo-button" class="utility-button" title="撤销（Ctrl+Z）" disabled><svg class="icon"><use href="#i-undo"/></svg><span>撤销</span></button><button id="reset-button" class="utility-button"><svg class="icon"><use href="#i-reset"/></svg><span>重来</span></button><button id="hint-button" class="hint-button"><svg class="icon"><use href="#i-bulb"/></svg>提示</button></div></div>
         <div class="game-message" id="game-message" role="status" aria-live="polite">先找找只有一格的色块，小猫可能就在那里。</div>
-        <p class="input-tip"><span class="desktop-tip"><b>左键</b>排除／拖动连排 · <b>右键</b>放猫 · 方向键移动</span><span class="mobile-tip">选择「放猫」或「排除」，再点一下格子</span></p>
+        <p class="input-tip"><span class="desktop-tip"><b>左键单击</b>排除 · <b>左键双击／右键</b>放猫 · 按住拖动连续排除</span><span class="mobile-tip"><b>点击</b>排除 · <b>双击</b>放猫 · 按住滑动连续排除</span></p>
       </section>
     </main>
     <footer class="site-footer"><span><svg class="icon"><use href="#i-paw"/></svg>一小块安静，一点点成就感。</span><span>无需联网<span class="footer-dot">·</span>自动存档<span class="footer-dot">·</span>纯粹的逻辑乐趣</span></footer>
   </div>
-  <dialog id="game-dialog" aria-labelledby="dialog-title"><div class="dialog-inner"><button id="dialog-close" class="icon-button dialog-close" aria-label="关闭弹窗"><svg class="icon"><use href="#i-close"/></svg></button><div id="dialog-content"></div></div></dialog>
+  <dialog id="game-dialog" aria-labelledby="dialog-title"><div id="celebration-layer" class="celebration-layer" aria-hidden="true"></div><div class="dialog-inner"><button id="dialog-close" class="icon-button dialog-close" aria-label="关闭弹窗"><svg class="icon"><use href="#i-close"/></svg></button><div id="dialog-content"></div></div></dialog>
+  <audio id="cat-sound" src="assets/audio/cute-kittens.mp3" preload="auto"></audio>
+  <audio id="result-music" src="assets/audio/哈基米战歌.mp3" preload="auto" loop></audio>
   <noscript>请在浏览器中启用 JavaScript 后开始找猫。</noscript>
 </body>
 </html>
