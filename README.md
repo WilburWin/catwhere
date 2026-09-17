@@ -1,7 +1,8 @@
 # 猫咪在哪里
 
 一款无需安装、无需联网的浏览器逻辑游戏，参考手机截图的彩色区域找猫玩法，针对电脑和手机重新排版。
-
+[点击即玩]（https://www.bilibili.com/toy/CatsWhere）
+[click to play]（https://www.bilibili.com/toy/CatsWhere）
 ## 开始游戏
 
 双击本目录的 **index.html**，用 Edge、Chrome、Firefox 或 Safari 打开即可。所有图片、样式、脚本和关卡均为本地资源，不需要服务器或网络。
